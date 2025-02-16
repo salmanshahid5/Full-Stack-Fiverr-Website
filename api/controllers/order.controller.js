@@ -5,7 +5,6 @@ import Gig from "../models/gig.model.js";
 export const createOrder = async (req, res, next) => {
   try {
     const gig = await Gig.findById(req.params.gigId);
-    console.log("Gig found:", gig);
     if (!gig) {
       return next(createError(404, "Gig not found"));
     }
@@ -35,7 +34,7 @@ export const getOrders = async (req, res, next) => {
       ...(req.isSeller ? { sellerId: req.userId } : { buyerId: req.userId }),
       isCompleted: true,
     });
-
+    console.log("Fetched Orders:", orders); // Debugging
     res.status(200).json(orders);
   } catch (err) {
     next(err);
